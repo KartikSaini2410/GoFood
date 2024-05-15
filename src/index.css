@@ -5,9 +5,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: "NHaasGroteskDSPro-65Md" !important;
+  background-color: #1f2122 !important;
+}
+
+.MuiSvgIcon-root{
+  color: white !important;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+#carousel{
+max-height: 500px;
 }
