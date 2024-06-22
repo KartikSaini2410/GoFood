@@ -1,5 +1,5 @@
 const express = require('express');
-const { body, query, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const user = require('../models/User');
 const bcrypt = require('bcrypt');
@@ -39,49 +39,50 @@ async(req, res)=> {
     }
 })
 
-router.get('/loginuser',
-    [
-        query('email', 'incorrect email').isEmail(),
-        query('password', 'incorrect password').isLength({ min: 5 })
-    ],
-    async (req, res) => {
-        const errors = validationResult(req);
+// POST request to handle user login
+router.post('/loginuser', [
+    body('email', 'Incorrect email').isEmail(),
+    body('password', 'Incorrect password').isLength({ min: 5 })
+], async (req, res) => {
+    const errors = validationResult(req);
 
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email, password } = req.body;
+
+    try {
+        let userData = await User.findOne({ email });
+
+        if (!userData) {
+            return res.status(400).json({ errors: 'Invalid credentials' });
         }
 
-        const { email, password } = req.query;
+        const pwdCompare = await bcrypt.compare(password, userData.password);
 
-        try {
-            let userData = await User.findOne({ email });
-
-            if (!userData) {
-                return res.status(400).json({ errors: 'Try login with correct credentials' });
-            }
-
-            const pwdCompare = await bcrypt.compare(password, userData.password);
-
-            if (!pwdCompare) {
-                return res.status(400).json({ errors: 'Try login with correct credentials' });
-            }
-
-            const payload = {
-                user: {
-                    id: userData._id
-                }
-            };
-
-            const authToken = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
-
-            return res.json({
-                success: true,
-                authToken: authToken
-            });
-        } catch (error) {
-            console.error(error.message);
-            return res.status(500).json({ errors: 'Server Error' });
+        if (!pwdCompare) {
+            return res.status(400).json({ errors: 'Invalid credentials' });
         }
-    });
+
+        const payload = {
+            user: {
+                id: userData._id
+            }
+        };
+
+        const authToken = jwt.sign(payload, jwtSecret);
+
+        return res.json({
+            success: true,
+            authToken: authToken
+        });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+module.exports = router;
 
 module.exports = router;
