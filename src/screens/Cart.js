@@ -1,5 +1,4 @@
-import React from 'react'
-import Delete from '@material-ui/icons/Delete';
+import React from 'react';
 import _ from 'lodash';
 import { useCart, useDispatchCart } from '../components/ContextReducer';
 
@@ -63,7 +62,7 @@ export default function Cart() {
                     <td className='text-white'>{food.qty}</td>
                     <td className='text-white'>{food.size}</td>
                     <td className='text-white'>{food.price}</td>
-                    <td className='text-white'><button type="button" className="btn p-0"><Delete onClick={() => { dispatch({ type: "REMOVE", index: index }) }} /></button> </td></tr>
+                    <td className='text-white'><button type="button" className="btn p-0 text-white" onClick={() => { dispatch({ type: "REMOVE", index: index }) }}> Remove</button> </td></tr>
                 ))}
             </tbody>
             </table>
