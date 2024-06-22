@@ -39,7 +39,7 @@ async(req, res)=> {
     }
 })
 
-router.post('/loginuser',
+router.get('/loginuser',
 [body('email', 'incorrect email').isEmail(),
 body('password', 'incorrect password').isLength({min: 5})],
 async(req, res)=> {

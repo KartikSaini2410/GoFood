@@ -10,7 +10,7 @@ export default function Login() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     let data= {
-        method:'POST',
+        method:'GET',
         headers:{
             'Content-Type': 'application/json'
         },
