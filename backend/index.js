@@ -7,18 +7,21 @@ const port = process.env.PORT || 4000;
 
 // Connect to MongoDB
 mongoDB();
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
-// Middleware to enable CORS
-app.use(cors({
-  origin: 'http://go-food-kqsa1amqg-kartiksaini2410s-projects.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
-}));
+app.use((req,res,next)=>{
+  res.setHeader("Access-Control-Allow-Origin", "http://go-food-kqsa1amqg-kartiksaini2410s-projects.vercel.app");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+})
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+app.use(express.json())
 
-// API routes
 app.use('/api', require('./Routes/CreateUser'));
 app.use('/api', require('./Routes/DisplayData'));
 app.use('/api', require('./Routes/OrderData'));
