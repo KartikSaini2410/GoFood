@@ -24,12 +24,10 @@ export default function Home() {
     response = await response.json();
       setFoodCat(response[1]);
       setFoodItem(response[0]);
-      // setFoodData(allData)
 
   }
 
   useEffect(()=> {
-    localStorage.setItem("currPage", "home");
     loadData();
   },[])
 
