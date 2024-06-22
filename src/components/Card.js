@@ -1,12 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
 import _ from 'lodash';
 import { useDispatchCart, useCart } from './ContextReducer';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import {clickedCart} from "../redux/counter/CounterSlice";
 
 export default function Card(props) {
 
     const [qty, setQty] = useState(1);
     const [size, setSize] = useState("");
     const priceRef = useRef();
+    const navigate = useNavigate();
+    const dispatched = useDispatch();
 
     let foodItem = props.foodItem;
     let options = props.options[0];
@@ -18,7 +23,6 @@ export default function Card(props) {
 
     const addToCart = async () => {
         let food = []
-        console.log(foodItem,"foodItem")
         for (const item of data) {
           if (_.isEqual(item.id, props.foodItem._id)) {
             food = item;
@@ -26,7 +30,6 @@ export default function Card(props) {
             break;
           }
         }
-        console.log(food, size, "food")
 
         if (!_.isEmpty(food)) {
           if (_.isEqual(food.size, size)) {
@@ -35,24 +38,27 @@ export default function Card(props) {
           }
           else if (!_.isEqual(food.size, size)) {
             await dispatch({ type: "ADD", id: foodItem._id, name: foodItem.name, price: finalPrice, qty: qty, size: size,img: props.ImgSrc })
-            console.log("Size different so simply ADD one more to the list")
             return
           }
           return
         }
         await dispatch({type:"ADD", id:foodItem._id, name:foodItem.name, price:finalPrice, qty:qty, size:size, img:foodItem.img })
-        console.log(data,"data")
     }
 
     useEffect(()=> {
         setSize(priceRef.current.value);
     },[])
 
+    const goToDetails = (selectedItem) => {
+      dispatched(clickedCart(selectedItem));
+      navigate("/details");
+    }
+
 
   return (
     <>
         <div className="card mt-3" style={{width: "18rem", maxHeight: "360px"}}>
-            <img src={foodItem.img} className="card-img-top" alt="..." style={{height:"150px", objectFit:"fill"}} />
+            <img src={foodItem.img} onClick={()=> goToDetails(foodItem)} className="card-img-top" alt="..." style={{height:"150px", objectFit:"fill"}} />
             <div className="card-body">
                 <h5 className="card-title">{foodItem.name}</h5>
                 <div className='container w-100'>

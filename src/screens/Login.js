@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
@@ -6,6 +6,10 @@ export default function Login() {
 
   const [values, setValues] = useState({email: "", password: ""});
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    localStorage.setItem("currPage", "login");
+  },[])
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -18,15 +22,14 @@ export default function Login() {
     }
     const response = await fetch('http://localhost:4000/api/loginuser', data);
     const json = await response.json();
-    console.log(json)
     if(!json.success){
-        alert('Enter valid credentials')
+        alert('Enter valid credentials');
     }
 
     if(json.success){
         localStorage.setItem('userEmail', values.email)
-      localStorage.setItem('AUTH_TOKEN', json.authToken)
-      navigate('/');
+        localStorage.setItem('AUTH_TOKEN', json.authToken)
+        navigate('/home');
     }
 }
 

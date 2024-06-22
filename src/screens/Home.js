@@ -3,7 +3,9 @@ import _ from 'lodash';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from '../components/Card';
-import Carousel from '../components/Carousel';
+import burgerImage from "../images/burger.jpg";
+import pizzaImage from "../images/pizza.jpg";
+import barbequeImage from "../images/barbeque.jpg"
 
 export default function Home() {
 
@@ -20,7 +22,6 @@ export default function Home() {
     }
     let response = await fetch('http://localhost:4000/api/foodData', data);
     response = await response.json();
-      console.log(response);
       setFoodCat(response[1]);
       setFoodItem(response[0]);
       // setFoodData(allData)
@@ -28,6 +29,7 @@ export default function Home() {
   }
 
   useEffect(()=> {
+    localStorage.setItem("currPage", "home");
     loadData();
   },[])
 
@@ -44,13 +46,13 @@ export default function Home() {
               </div>
             </div>
               <div className="carousel-item active">
-              <img src="https://source.unsplash.com/random/900x700/?burger" className="d-block w-100" style={{filter: "brightness(30%)"}} alt="..." />
+              <img src={burgerImage} className="d-block w-100" style={{filter: "brightness(30%)"}} alt="..." />
               </div>
               <div className="carousel-item">
-              <img src="https://source.unsplash.com/random/900x700/?pizza" className="d-block w-100" style={{filter: "brightness(30%)"}} alt="..." />
+              <img src={pizzaImage} className="d-block w-100" style={{filter: "brightness(30%)"}} alt="..." />
               </div>
               <div className="carousel-item">
-              <img src="https://source.unsplash.com/random/900x700/?barbeque" className="d-block w-100" style={{filter: "brightness(30%)"}} alt="..." />
+              <img src={barbequeImage} className="d-block w-100" style={{filter: "brightness(30%)"}} alt="..." />
               </div>
           </div>
           <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">

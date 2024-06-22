@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 export default function () {
     const [values, setValues] = useState({name: "", email: "", password: "", geolocation: ""})
+    const navigate = useNavigate();
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -16,10 +17,14 @@ export default function () {
         }
         const response = await fetch('http://localhost:4000/api/createuser', data);
         const json = await response.json();
-        console.log(json, "json");
 
         if(!json.success){
             alert('Enter valid credentials')
+        }
+        if(json.success){
+            setValues({name: "", email: "", password: "", geolocation: ""});
+            alert('Account created successfully');
+            navigate('/login');
         }
     }
 
