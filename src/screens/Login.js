@@ -9,14 +9,16 @@ export default function Login() {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    const email = encodeURIComponent(values.email);
+    const password = encodeURIComponent(values.password);
+    const url = `https://go-food-self.vercel.app/api/loginuser?email=${email}&password=${password}`;
     let data= {
         method:'GET',
         headers:{
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({password:values.password, email:values.email})
     }
-    const response = await fetch('https://go-food-self.vercel.app/api/loginuser', data);
+    const response = await fetch(url, data);
     const json = await response.json();
     if(!json.success){
         alert('Enter valid credentials');
