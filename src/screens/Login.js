@@ -7,34 +7,42 @@ export default function Login() {
   const [values, setValues] = useState({email: "", password: ""});
   const navigate = useNavigate();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = encodeURIComponent(values.email);
     const password = encodeURIComponent(values.password);
     const url = `https://go-food-self.vercel.app/api/loginuser?email=${email}&password=${password}`;
-    
+
     try {
         const response = await fetch(url);
-    
+
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-    
-        const json = await response.json();
-    
-        if (!json.success) {
-            alert('Enter valid credentials');
-        } else {
-            localStorage.setItem('userEmail', values.email);
-            localStorage.setItem('AUTH_TOKEN', json.authToken);
-            navigate('/');
+
+        const responseText = await response.text(); // Get raw response text for debugging
+        console.log('Response text:', responseText);
+
+        try {
+            const json = JSON.parse(responseText);
+
+            if (!json.success) {
+                alert('Enter valid credentials');
+            } else {
+                localStorage.setItem('userEmail', values.email);
+                localStorage.setItem('AUTH_TOKEN', json.authToken);
+                navigate('/');
+            }
+        } catch (parseError) {
+            console.error('Error parsing JSON:', parseError.message);
+            // Handle JSON parsing error
         }
     } catch (error) {
         console.error('Fetch error:', error.message);
         // Handle fetch error (e.g., show user a message)
     }
-    
-}
+};
+
 
   const handleChange = (e) => {
     e.preventDefault();
