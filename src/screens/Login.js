@@ -16,7 +16,7 @@ export default function Login() {
         },
         body: JSON.stringify({password:values.password, email:values.email})
     }
-    const response = await fetch('https://go-food-kqsa1amqg-kartiksaini2410s-projects.vercel.app/api/loginuser', data);
+    const response = await fetch('http://go-food-kqsa1amqg-kartiksaini2410s-projects.vercel.app/api/loginuser', data);
     const json = await response.json();
     if(!json.success){
         alert('Enter valid credentials');

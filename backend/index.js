@@ -10,7 +10,7 @@ mongoDB();
 
 // Middleware to enable CORS
 app.use(cors({
-  origin: 'https://go-food-kqsa1amqg-kartiksaini2410s-projects.vercel.app',
+  origin: 'http://go-food-kqsa1amqg-kartiksaini2410s-projects.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 }));
