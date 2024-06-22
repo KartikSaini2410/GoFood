@@ -15,7 +15,7 @@ export default function () {
             },
             body: JSON.stringify({name:values.name, password:values.password, email:values.email, location:values.geolocation})
         }
-        const response = await fetch('https://go-food-kqsa1amqg-kartiksaini2410s-projects.vercel.app/api/createuser', data);
+        const response = await fetch('https://go-food-self.vercel.app/api/createuser', data);
         const json = await response.json();
 
         if(!json.success){

@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors'); // Import the cors package
 const mongoDB = require('./db');
 
 const app = express();
@@ -7,18 +6,28 @@ const port = process.env.PORT || 4000;
 
 // Connect to MongoDB
 mongoDB();
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
-// Middleware to set CORS headers
-app.use(cors({
-  origin: 'https://go-food-kartiksaini2410s-projects.vercel.app',
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
-}));
+app.use((req,res,next)=>{
+  res.setHeader("Access-Control-Allow-Origin", "https://go-food-self.vercel.app");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 // Middleware to set Referrer-Policy header
 app.use((req, res, next) => {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   next();
+});
+
+// Error handling middleware (optional but recommended)
+app.use((err, req, res, next) => {
+  res.status(500).send(err);
 });
 
 // Parse JSON bodies for POST requests
@@ -30,10 +39,6 @@ app.use('/api', require('./Routes/DisplayData'));
 app.use('/api', require('./Routes/OrderData'));
 app.use('/api', require('./Routes/MyOrderData'));
 
-// Default route
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-});
 
 // Start the server
 app.listen(port, () => {
