@@ -8,7 +8,6 @@ export default function MyOrder() {
     const [orderData, setorderData] = useState({})
 
     const fetchMyOrder = async () => {
-        console.log(localStorage.getItem('userEmail'))
         await fetch("http://localhost:4000/api/myOrderData", {
             // credentials: 'include',
             // Origin:"http://localhost:3000/login",
@@ -22,7 +21,6 @@ export default function MyOrder() {
         }).then(async (res) => {
             let response = await res.json()
             await setorderData([response]);
-            console.log(response, "response")
         })
 
 
