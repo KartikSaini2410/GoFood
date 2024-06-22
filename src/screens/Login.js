@@ -12,17 +12,28 @@ export default function Login() {
     const email = encodeURIComponent(values.email);
     const password = encodeURIComponent(values.password);
     const url = `https://go-food-self.vercel.app/api/loginuser?email=${email}&password=${password}`;
-    const response = await fetch(url);
-    const json = await response.json();
-    if(!json.success){
-        alert('Enter valid credentials');
+    
+    try {
+        const response = await fetch(url);
+    
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+    
+        const json = await response.json();
+    
+        if (!json.success) {
+            alert('Enter valid credentials');
+        } else {
+            localStorage.setItem('userEmail', values.email);
+            localStorage.setItem('AUTH_TOKEN', json.authToken);
+            navigate('/');
+        }
+    } catch (error) {
+        console.error('Fetch error:', error.message);
+        // Handle fetch error (e.g., show user a message)
     }
-
-    if(json.success){
-        localStorage.setItem('userEmail', values.email)
-        localStorage.setItem('AUTH_TOKEN', json.authToken)
-        navigate('/');
-    }
+    
 }
 
   const handleChange = (e) => {
