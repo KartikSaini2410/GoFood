@@ -11,14 +11,16 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "https://go-food-kqsa1amqg-kartiksaini2410s-projects.vercel.app");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-})
+});
+
+app.use((req, res, next) => {
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  next();
+});
 
 app.use(express.json())
 
