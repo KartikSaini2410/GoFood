@@ -20,7 +20,7 @@ export default function Home() {
         'Content-Type': 'application/json'
       }
     }
-    let response = await fetch('https://go-food-kqsa1amqg-kartiksaini2410s-projects.vercel.app/api/foodData', data);
+    let response = await fetch('https://go-food-kartiksaini2410s-projects.vercel.app/api/foodData', data);
     response = await response.json();
       setFoodCat(response[1]);
       setFoodItem(response[0]);

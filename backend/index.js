@@ -10,7 +10,7 @@ mongoDB();
 
 // Middleware to set CORS headers
 app.use(cors({
-  origin: 'https://go-food-kqsa1amqg-kartiksaini2410s-projects.vercel.app',
+  origin: 'https://go-food-kartiksaini2410s-projects.vercel.app',
   methods: ['GET', 'POST'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
 }));
