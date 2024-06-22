@@ -19,12 +19,6 @@ app.use((req,res,next)=>{
   next();
 });
 
-// Middleware to set Referrer-Policy header
-app.use((req, res, next) => {
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  next();
-});
-
 // Error handling middleware (optional but recommended)
 app.use((err, req, res, next) => {
   res.status(500).send(err);
