@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 })
 
 app.use((req,res,next)=>{
-  res.setHeader("Access-Control-Allow-Origin", "https://go-food-self.vercel.app");
+  res.setHeader("Access-Control-Allow-Origin", "https://nimble-stardust-93d950.netlify.app");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"

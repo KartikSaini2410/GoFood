@@ -53,7 +53,7 @@ router.post('/loginuser', [
     const { email, password } = req.body;
 
     try {
-        let userData = await User.findOne({ email });
+        let userData = await user.findOne({ email });
 
         if (!userData) {
             return res.status(400).json({ errors: 'Invalid credentials' });
@@ -82,7 +82,5 @@ router.post('/loginuser', [
         res.status(500).send('Server Error');
     }
 });
-
-module.exports = router;
 
 module.exports = router;

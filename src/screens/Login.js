@@ -9,7 +9,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = 'https://go-food-self.vercel.app/api/loginuser';
+    const url = 'https://nimble-stardust-93d950.netlify.app/api/loginuser';
     const formData = {
         email: values.email,
         password: values.password
