@@ -20,7 +20,7 @@ export default function Home() {
         'Content-Type': 'application/json'
       }
     }
-    let response = await fetch('https://nimble-stardust-93d950.netlify.app/api/foodData', data);
+    let response = await fetch('https://go-food-self.vercel.app/api/foodData', data);
     response = await response.json();
       setFoodCat(response[1]);
       setFoodItem(response[0]);

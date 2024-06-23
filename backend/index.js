@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoDB = require('./db');
 
 const app = express();
@@ -6,33 +7,35 @@ const port = process.env.PORT || 4000;
 
 // Connect to MongoDB
 mongoDB();
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
-app.use((req,res,next)=>{
-  res.setHeader("Access-Control-Allow-Origin", "https://nimble-stardust-93d950.netlify.app");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+// Enable CORS for the specific origin
+app.use(cors({
+  origin: 'https://go-food-self.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+}));
 
-// Error handling middleware (optional but recommended)
-app.use((err, req, res, next) => {
-  res.status(500).send(err);
-});
-
-// Parse JSON bodies for POST requests
+// Middleware to parse JSON bodies
 app.use(express.json());
 
-// Routes
+// Handle OPTIONS requests for CORS preflight
+app.options('*', cors());
+
+// Root route
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+// API routes
 app.use('/api', require('./Routes/CreateUser'));
 app.use('/api', require('./Routes/DisplayData'));
 app.use('/api', require('./Routes/OrderData'));
 app.use('/api', require('./Routes/MyOrderData'));
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  res.status(500).send(err);
+});
 
 // Start the server
 app.listen(port, () => {

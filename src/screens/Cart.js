@@ -21,7 +21,7 @@ export default function Cart() {
     const handleCheckOut = async () => {
         let userEmail = localStorage.getItem("userEmail");
         // console.log(data,localStorage.getItem("userEmail"),new Date())
-        let response = await fetch("https://nimble-stardust-93d950.netlify.app/api/orderData", {
+        let response = await fetch("https://go-food-self.vercel.app/api/orderData", {
         // credentials: 'include',
         // Origin:"http://localhost:3000/login",
         method: 'POST',
