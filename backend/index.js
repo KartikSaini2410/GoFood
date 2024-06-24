@@ -23,9 +23,6 @@ app.use(cors({
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Handle OPTIONS requests for CORS preflight
-app.options('*', cors());
-
 // Root route
 app.get('/', (req, res) => {
   res.json('Hello World!');
