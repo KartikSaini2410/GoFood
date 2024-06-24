@@ -13,7 +13,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("calling");
-    const url = 'https://go-food-self.vercel.app/api/loginuser';
+    const url = 'https://go-food-self.vercel.app/loginuser';
     const formData = {
         email: values.email,
         password: values.password
