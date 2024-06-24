@@ -43,6 +43,10 @@ app.post('/loginuser', [
   const { email, password } = req.body;
 
   try {
+    return res.json({
+      success: true,
+      // authToken: authToken
+  });
       let userData = await user.findOne({ email });
 
       if (!userData) {
