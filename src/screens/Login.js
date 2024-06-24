@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 
 export default function Login() {
 
   const [values, setValues] = useState({email: "", password: ""});
   const navigate = useNavigate();
+
+  axios.defaults.withCredentials = true;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,19 +19,13 @@ export default function Login() {
     };
 
     try {
-        const response = await fetch(url, {
-            method: 'POST',
+        const response = await axios.post(url, formData, {
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
+            }
         });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const json = await response.json();
+        const json = response.data;
 
         if (!json.success) {
             alert('Enter valid credentials');
@@ -42,6 +39,7 @@ export default function Login() {
         // Handle fetch error (e.g., show user a message)
     }
 };
+
 
 
 
