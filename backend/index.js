@@ -12,7 +12,7 @@ mongoDB();
 app.use(cors({
   origin: 'https://go-food-self.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+  credentials : true
 }));
 
 // Middleware to parse JSON bodies
