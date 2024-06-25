@@ -3,7 +3,7 @@ const cors = require('cors');
 const mongoDB = require('./db');
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 5000; 
 
 // Connect to MongoDB
 mongoDB();
@@ -38,6 +38,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
