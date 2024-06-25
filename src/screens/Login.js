@@ -12,21 +12,25 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("calling");
-    const url = 'https://go-food-self.vercel.app/loginuser';
-    const formData = {
-        email: values.email,
-        password: values.password
+    
+    const data = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password: values.password, email: values.email }),
+        credentials: 'include' // Include credentials in the request
     };
 
     try {
-        const response = await axios.post(url, formData, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        const json = response.data;
+        const response = await fetch('https://food-backend-eight.vercel.app/api/loginuser', data);
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        const json = await response.json();
+        console.log(json);
 
         if (!json.success) {
             alert('Enter valid credentials');
@@ -40,9 +44,6 @@ export default function Login() {
         // Handle fetch error (e.g., show user a message)
     }
 };
-
-
-
 
   const handleChange = (e) => {
     e.preventDefault();
