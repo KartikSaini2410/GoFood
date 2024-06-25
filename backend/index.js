@@ -10,7 +10,7 @@ mongoDB();
 
 // Enable CORS for the specific origin
 app.use(cors({
-  origin: 'https://go-food-backend-sable.vercel.app',
+  origin: 'https://go-food-self.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 }));
@@ -19,7 +19,7 @@ app.use(cors({
 app.use(express.json());
 
 // Handle OPTIONS requests for CORS preflight
-app.options('*', cors());
+// app.options('*', cors());
 
 // Root route
 app.get('/', (req, res) => {
