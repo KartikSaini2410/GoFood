@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import _ from 'lodash';
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
@@ -9,6 +10,13 @@ export default function Login() {
   const navigate = useNavigate();
 
   axios.defaults.withCredentials = true;
+
+  useEffect(()=> {
+    let mailId = localStorage.getItem('userEmail');
+    if(!_.isEmpty(mailId)){
+        navigate('/');
+    }
+  },[])
 
   const handleSubmit = async (e) => {
     e.preventDefault();

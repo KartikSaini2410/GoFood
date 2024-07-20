@@ -1,6 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react';
 import _ from 'lodash';
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useDispatchCart, useCart } from '../components/ContextReducer';
 
@@ -9,12 +10,20 @@ export default function Details() {
     const [qty, setQty] = useState(1);
     const [size, setSize] = useState("");
     const priceRef = useRef();
+    const navigate = useNavigate();
     const selectedItem = useSelector((state)=> state?.counter?.value);
     let options = selectedItem.options[0];
     let priceOptions = Object.keys(options);
     let dispatch = useDispatchCart();
     let data = useCart();
     let finalPrice = qty*parseInt(options[size]);
+
+    useEffect(()=> {
+      let mailId = localStorage.getItem('userEmail');
+      if(_.isEmpty(mailId)){
+          navigate('/login');
+      }
+    },[])
 
     useEffect(()=> {
         setSize(priceRef.current.value);

@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
+import { useNavigate } from "react-router-dom";
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
 export default function MyOrder() {
 
-    const [orderData, setorderData] = useState({})
+    const [orderData, setorderData] = useState({});
+    const navigate = useNavigate();
+
+    useEffect(()=> {
+        let mailId = localStorage.getItem('userEmail');
+        if(_.isEmpty(mailId)){
+            navigate('/login');
+        }
+      },[])
 
     const fetchMyOrder = async () => {
         await fetch("https://food-backend-eight.vercel.app/api/myOrderData", {

@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import _ from 'lodash';
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 export default function () {
     const [values, setValues] = useState({name: "", email: "", password: "", geolocation: ""})
     const navigate = useNavigate();
+
+    useEffect(()=> {
+        let mailId = localStorage.getItem('userEmail');
+        if(!_.isEmpty(mailId)){
+            navigate('/');
+        }
+    },[])
 
     const handleSubmit = async(e) => {
         e.preventDefault();

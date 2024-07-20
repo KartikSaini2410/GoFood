@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from '../components/Card';
@@ -12,6 +13,15 @@ export default function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
   const [search, setSearch] = useState("");
+
+  const navigate = useNavigate();
+  
+  useEffect(()=> {
+    let mailId = localStorage.getItem('userEmail');
+    if(_.isEmpty(mailId)){
+        navigate('/login');
+    }
+  },[])
 
   const loadData = async ()=> {
     let data= {
