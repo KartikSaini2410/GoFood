@@ -10,7 +10,7 @@ export default function () {
     useEffect(()=> {
         let mailId = localStorage.getItem('userEmail');
         if(!_.isEmpty(mailId)){
-            navigate('/');
+            navigate('/home');
         }
     },[])
 

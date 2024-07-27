@@ -14,7 +14,7 @@ export default function Login() {
   useEffect(()=> {
     let mailId = localStorage.getItem('userEmail');
     if(!_.isEmpty(mailId)){
-        navigate('/');
+        navigate('/home');
     }
   },[])
 
@@ -45,7 +45,7 @@ export default function Login() {
         } else {
             localStorage.setItem('userEmail', values.email);
             localStorage.setItem('AUTH_TOKEN', json.authToken);
-            navigate('/');
+            navigate('/home');
         }
     } catch (error) {
         console.error('Fetch error:', error.message);
