@@ -12,7 +12,7 @@ export default function Details() {
     const priceRef = useRef();
     const navigate = useNavigate();
     const selectedItem = useSelector((state)=> state?.counter?.value);
-    let options = selectedItem.options[0];
+    let options = _.get(selectedItem, "options[0]",[]);
     let priceOptions = Object.keys(options);
     let dispatch = useDispatchCart();
     let data = useCart();
@@ -21,7 +21,7 @@ export default function Details() {
     useEffect(()=> {
       let mailId = localStorage.getItem('userEmail');
       if(_.isEmpty(mailId)){
-          navigate('/login');
+        navigate('/login');
       }
     },[])
 
@@ -56,12 +56,15 @@ export default function Details() {
   return (
     <div>
         <div><Navbar /></div>
-        <div className='row text-white'>
-            <div className='col-6 pt-2' style={{marginLeft:"7px"}}> 
-                <img src={selectedItem.img} alt="" />
+        <div className='row d-flex text-white'  style={{margin: "auto"}}>
+            <div className='col-12 col-md-6' > 
+              <div className='p-2'>
+                <img className='w-100' src={selectedItem.img} style={{height:"400px"}} alt="" />
+              </div>
             </div>
-            <div className='col-5 mt-5'>
-                <h3>{selectedItem.name}</h3>
+            <div className='col-12 col-md-6 mt-5'>
+              <div className='p-2'>
+              <h3>{selectedItem.name}</h3>
                 <div className='container w-100'>
                     <div>
                         <select className='m-2 h-100 bg-success rounded' onChange={(e)=> setQty(e.target.value)}>
@@ -82,6 +85,7 @@ export default function Details() {
                 <hr />
                 <div className='h-100 mt-4'><strong>Description </strong> - {selectedItem.description}</div>
                 </div>
+              </div>
             </div>
         </div>
     </div>
